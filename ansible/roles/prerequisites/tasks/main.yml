@@ -9,4 +9,14 @@
   ansible.builtin.pip:
     name: openshift
 
+- name: Simulate DNS record on /etc/hosts
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.0\.1'
+    line: 127.0.0.1 localhost argocd.mycluster.algolia
+    owner: root
+    group: root
+    mode: '0644'
+
 ...

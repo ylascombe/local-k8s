@@ -32,7 +32,16 @@ In a real context, I will implement CI/CD pipeline to do all these tasks
 vagrant up
 ```
 
+Temporarly:
+```sh
+echo "192.168.121.60  argocd.localhost argocd.mycluster.algolia" | sudo tee -a /etc/hosts
+```
 
+## Force ansible relaunch
+
+```sh
+vagrant provision
+```
 
 # Session 1 : lookup project and run it
 
