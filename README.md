@@ -30,7 +30,7 @@ In a real context, I will implement CI/CD pipeline to do all these tasks
 
 Temporarly:
 ```sh
-echo "192.168.121.60  argocd.localhost argocd.mycluster.algolia" | sudo tee -a /etc/hosts
+echo "192.168.121.60  argocd.localhost argocd.mycluster.algolia  instant-search.mycluster.algolia" | sudo tee -a /etc/hosts
 ```
 
 ```bash
