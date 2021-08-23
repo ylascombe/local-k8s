@@ -31,6 +31,26 @@
     definition: "{{ lookup('template', 'ingress.yml.j2') | from_yaml }}"
     namespace: argocd
 
-# - name: Launch argocd locally
-#   include_tasks: local-launch.yml
+- name: Ensure instant-search argocd project resource is deployed.
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'instant-search-project.yml') | from_yaml }}"
+    namespace: argocd
+
+- name: Ensure instant-search argocd app resource is deployed.
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'instant-search-app.yml') | from_yaml }}"
+    namespace: argocd
+
+- name: TMP JUST FOR DEMO retrieve argocd password
+  shell: kubectl get secret -n argocd argocd-initial-admin-secret  -ojsonpath='{.data.password}' | base64 -d
+  register: argocd_password
+  changed_when: false
+
+- name: TMP JUST FOR DEMO print argocd login/password
+  debug:
+    msg: >
+      Please open ArgoCD wit URL https://argocd.mycluster.algolia/applications 
+      and then use login=admin and password={{ argocd_password.stdout }} You will see instant-search app definition
 ...

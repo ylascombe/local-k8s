@@ -28,14 +28,17 @@ In a real context, I will implement CI/CD pipeline to do all these tasks
 
 # Launch locally
 
-```bash
-vagrant up
-```
-
 Temporarly:
 ```sh
 echo "192.168.121.60  argocd.localhost argocd.mycluster.algolia" | sudo tee -a /etc/hosts
 ```
+
+```bash
+vagrant up
+```
+
+Wait for vagrant and ansible ends without error and then check in ansible logs login/password (printed just for demo here) and then
+authenticate on [ArgoCD](https://argocd.mycluster.algolia/)
 
 ## Force ansible relaunch
 
@@ -67,11 +70,11 @@ Automated tests should be added for each new feature or bugfix
 * integration test
 
 ### Security tools
-* Software Composition Analysis (SCA) : detect component (framework/package) with known issues : `npm audit`
-* Container Composition Analysis (CCA) : detect middleware with known issues : `clair` or `trivy`
-* Static Application Security Testing (SAST) : detect bad usage of language or framework (by source code analysis of applications) which could causes applicative issues (XSS, SQLi, …) : `eslint security`
-* Dynamic Application Security Testing (DAST) : execute security tests in order to identify configuration error (HTTPS config, cookie setting...) at infra or applicative level : `ZAP`
-* Runtime application self-protection (RASP) : security framework, included in application, which check app configuration and intercept each query to analyse them: `OpenRASP (Baidu)`
+* [ ] Software Composition Analysis (SCA) : detect component (framework/package) with known issues : `npm audit`
+* [x] Container Composition Analysis (CCA) : detect middleware with known issues : `clair` or `trivy`
+* [ ] Static Application Security Testing (SAST) : detect bad usage of language or framework (by source code analysis of applications) which could causes applicative issues (XSS, SQLi, …) : `eslint security`
+* [ ] Dynamic Application Security Testing (DAST) : execute security tests in order to identify configuration error (HTTPS config, cookie setting...) at infra or applicative level : `ZAP`
+* [ ] Runtime application self-protection (RASP) : security framework, included in application, which check app configuration and intercept each query to analyse them: `OpenRASP (Baidu)`
 
 
 

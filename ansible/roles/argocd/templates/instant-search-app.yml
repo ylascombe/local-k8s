@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: instant-search-local
+  namespace: argocd
+spec:
+  destination:
+    namespace: instant-search
+    server: "https://kubernetes.default.svc" # TODO variabilize me later 
+  project: instant-search # TODO variabilize me later
+  source:
+    path: helm/instant-search
+    repoURL: https://github.com/ylascombe/instant-search-demo.git
+    targetRevision: feat/ci_cd
+    helm:
+      valueFiles:
+        - values.yaml
+  syncPolicy:
+    retry: {}
+...
