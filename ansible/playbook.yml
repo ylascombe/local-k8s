@@ -1,0 +1,10 @@
+- hosts: all
+  roles:
+    - name: Ensure prerequisites are defined.
+      role: prerequisites
+    - name: Ensure kubectl is installed.
+      role: kubectl  
+    - name: Ensure kind cluster deployed.
+      role: kind
+    - name: Ensure argocd is deployed.
+      role: argocd

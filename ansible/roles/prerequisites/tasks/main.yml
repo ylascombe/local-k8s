@@ -1,0 +1,12 @@
+---
+# hack since there is a bug with vagrant ans ansible-local provisioner with python 3: install openshift pip dep via ansible
+- name: Ensure pip is installed.
+  become: true
+  ansible.builtin.package:
+    name: python3-pip
+
+- name: Ensure openshift pip dependency is installed.
+  ansible.builtin.pip:
+    name: openshift
+
+...

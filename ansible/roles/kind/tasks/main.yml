@@ -1,0 +1,57 @@
+---
+
+- name: Ensure kind is installed.
+  become: true
+  ansible.builtin.get_url:
+    url: https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+    dest: /usr/local/bin/kind
+    mode: ugo+x
+    #status_code: [200,304]
+
+- name: Ensure kind cluster config is present.
+  ansible.builtin.template:
+    src: cluster-config.yml.j2
+    dest: cluster-config.yml
+
+- name: Test if kind cluster already exists.
+  command: kind get clusters
+  register: test_kind_get_cluster
+  changed_when: false
+
+- block:
+    - name: Deploy local kubernetes cluster with Kind
+      command: kind create cluster --config=cluster-config.yml
+    
+    - name: Ensure kind cluster is visible
+      command: kind get clusters
+      register: test_kind_get_cluster
+      until: "kind_cluster_name in test_kind_get_cluster.stdout"
+      retries: 30
+      delay: 2
+  when: "kind_cluster_name not in test_kind_get_cluster.stdout"
+
+- name: Download nginx ingress controller manifests.
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+    dest: /tmp/nginx-ingress-controller-deploy.yml
+    mode: 0644
+
+- name: Ensure nginx ingress controller is installed.
+  kubernetes.core.k8s:
+    state: present
+    src: /tmp/nginx-ingress-controller-deploy.yml
+
+  # TODO manage idempotency 
+- name: Wait for ingress controller to be ready.
+  command: > 
+    kubectl wait --namespace ingress-nginx
+    --for=condition=ready pod
+    --selector=app.kubernetes.io/component=controller
+    --timeout=90s
+  register: test_kubectl_wait_for_ingress
+  until: "'error: no matching resources found' not in test_kubectl_wait_for_ingress.stderr"
+  retries: 20
+  delay: 5
+  changed_when: false
+
+...

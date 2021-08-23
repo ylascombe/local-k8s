@@ -1,0 +1,20 @@
+---
+
+- name: Ensure kubectl {{ kubectl_version }} is installed.
+  become: true
+  ansible.builtin.get_url:
+    url: https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl
+    dest: /usr/local/bin/kubectl
+    mode: ugo+x
+
+- name: Download and extract Helm {{ helm_version }} binary archive on temp folder.
+  ansible.builtin.unarchive:
+    src: https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+    # include: ['linux-amd64/helm'] not working in ansible 2.10.5, so cut task in 2 task :-()
+    mode: ugo+x
+
+- name: Move Helm {{ helm_version }} bin in right folder.
+  become: true
+  command: cp /tmp/linux-amd64/helm /usr/local/bin/helm
