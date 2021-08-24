@@ -26,6 +26,12 @@ In a real context, I will implement CI/CD pipeline to do all these tasks
 * plugin vagrant
     * `vagrant plugin install vagrant-hostmanager`
 
+```sh
+virtualenv -p python3 venv
+source venv/bin/activate
+pip3 install -r requiremments.txt
+```
+
 # Launch locally
 
 Temporarly:
@@ -117,4 +123,13 @@ Configure a project and a repository in ArgoCD to deploy instant-search app
 
 # Architecture
 
+## Local architecture (current)
 ![](./docs/archi-basic.png)
+
+## Target architecture (not implemented)
+
+### Layering 
+
+![](./docs/layering-archi.png)
+
+> For convenience, in sent version, `local-k8s` repository contains also a little part of `k8s-apps` that is designed here.
