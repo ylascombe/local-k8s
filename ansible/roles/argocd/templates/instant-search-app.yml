@@ -18,4 +18,5 @@ spec:
         - values.yaml
   syncPolicy:
     retry: {}
+    automated: {}
 ...

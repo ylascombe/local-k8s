@@ -43,6 +43,14 @@
     definition: "{{ lookup('template', 'instant-search-app.yml') | from_yaml }}"
     namespace: argocd
 
+- name: Wait for argocd started (here by waiting for secret generation)
+  shell: kubectl get secret -n argocd
+  register: test_argocd_secret
+  until: "'argocd-initial-admin-secret' in test_argocd_secret.stdout"
+  retries: 10
+  delay: 2
+  changed_when: false
+
 - name: TMP JUST FOR DEMO retrieve argocd password
   shell: kubectl get secret -n argocd argocd-initial-admin-secret  -ojsonpath='{.data.password}' | base64 -d
   register: argocd_password
@@ -52,5 +60,6 @@
   debug:
     msg: >
       Please open ArgoCD wit URL https://argocd.mycluster.algolia/applications 
-      and then use login=admin and password={{ argocd_password.stdout }} You will see instant-search app definition
+      and then use login=admin and password={{ argocd_password.stdout }} You will see instant-search app definition.
+      You should also accept security warning since ArgoCD do not expose a valid SSL certificate.
 ...
