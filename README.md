@@ -1,4 +1,4 @@
-# Yohan Lascombe implementation of Algolia assignment
+# My implementation of Algolia assignment
 
 This repository contains code to build a mini infrastructure (based on a local Kubernetes) to host instant-search-demo application.
 It will contains also comments of my work.
@@ -146,13 +146,13 @@ Lot of things are missing if we want to use really this project. It's difficult 
     * I did not have used simplified version of app
     * some variable (or secret) could be extracted from code (for example Google Analytics Id), use env var with docker could be a good way     (`envsubst` is often usefull ;-) )
     * I do not really care about `dataset_import` module : it should be nice to take some time to configure it
-* CI/CD pipeline: please look next paragraph for main things
+* CI/CD pipeline: please look [next paragraph](#Target CI/CD Pipeline) for main things
     * I had discovered too late (time is missing to fix it) TravisCI have a feature to encyrpt secrets instead of using env vars.
 * Day-2 tools:
     * monitoring: `prometheus/grafana` is missing : I didn't have configured requests/limits resources on the deployment since I normally use monitoring to define the rights quota
     * logs: `Elastic/F**/Kibana` or `Loki` should be used
 
-## Target CI/CD Pipeline:
+## Target CI/CD Pipeline
 
 Sent version of my assignement is very basic, in real life, I will enjoyed to talk to dev team to understand what they needs and want and help to implements it. Below are some features that are missing for me : 
 
