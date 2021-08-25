@@ -47,7 +47,7 @@
   shell: kubectl get secret -n argocd
   register: test_argocd_secret
   until: "'argocd-initial-admin-secret' in test_argocd_secret.stdout"
-  retries: 10
+  retries: 30
   delay: 2
   changed_when: false
 
