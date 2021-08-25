@@ -3,24 +3,6 @@
 This repository contains code to build a mini infrastructure (based on a local Kubernetes) to host instant-search-demo application.
 It will contains also comments of my work.
 
-
-# Tradeoff
-* Will use vagrant to launch VM locally (because it is the most rapid (or at least a rapid one) way to deploy a Virtual Machine): but a tool focused on desired state configuration will be better (terraform for example)
-* In order to install middlewares (aka kubernetes on VM), some solutions are possible (minikube, shell script, ansible, prepacked VM with packer, docker-compose...)  I will use ansible provisionner to deploy middlewares on this VM 
-* with linux system services (systemd) or via docker-compose : it is not what I will do, I want to deploy app on a Kubernetes cluster, but add Kubernetes in the architecte map should be discussed for real application.
-
-# Main steps
-
-As I don't know exactly how much time is needed to achieve this assignment (and also how much time I can spent) : I have cut my work on somes steps. I choose to work first on things I estimate most prio. So here the steps I see:
-1. [x] understand what is the subject apps (run locally and look rapidly code)
-1. [x] launch app locally with docker (and docker-compose)
-1. [x] build docker image with CI
-1. [x] deploy app on Kubernetes running on my laptop (with Kind)
-1. [x] instrument (with infra as code) how to initialize and run a local Kubernetes cluster
-1. [ ] configure logs management, monitoring for app in cluster 
-
-In a real context, all these tasks should be done only with CI/CD pipelines.
-
 # Prerequisites
 
 * vagrant (with an hypervisor behind)
@@ -55,6 +37,23 @@ If required, you could launch ansible (and docker provisioner) with the followin
 ```sh
 vagrant provision
 ```
+
+# Main steps
+
+As I don't know exactly how much time is needed to achieve this assignment (and also how much time I can spent) : I have cut my work on somes steps. I choose to work first on things I estimate most prio. So here the steps I see:
+1. [x] understand what is the subject apps (run locally and look rapidly code)
+1. [x] launch app locally with docker (and docker-compose)
+1. [x] build docker image with CI
+1. [x] deploy app on Kubernetes running on my laptop (with Kind)
+1. [x] instrument (with infra as code) how to initialize and run a local Kubernetes cluster
+1. [ ] configure logs management, monitoring for app in cluster 
+
+In a real context, all these tasks should be done only with CI/CD pipelines.
+
+# Tradeoff
+* Will use vagrant to launch VM locally (because it is the most rapid (or at least a rapid one) way to deploy a Virtual Machine): but a tool focused on desired state configuration will be better (terraform for example)
+* In order to install middlewares (aka kubernetes on VM), some solutions are possible (minikube, shell script, ansible, prepacked VM with packer, docker-compose...)  I will use ansible provisionner to deploy middlewares on this VM 
+
 
 # Session 1 : lookup project and run it
 
@@ -129,6 +128,9 @@ Configure a project and a repository in ArgoCD to deploy instant-search app
 
 # What is missing here
 
+On synthesis, I had lost a lot of time to build a solution based on a VirtualMachine. By reading again the assignement, it was not an expectation. If I had to redo my work, so I will skip VM and I will use only docker + Kind + terraform + argocd.
+
+More detailed : 
 Lot of things are missing if we want to use really this project. It's difficult to list all, so I will try to enumerate topics:
 * provision layer
     * on local VM
