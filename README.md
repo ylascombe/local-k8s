@@ -1,4 +1,3 @@
-# My implementation of Algolia assignment
 
 This repository contains code to build a mini infrastructure (based on a local Kubernetes) to host instant-search-demo application.
 It will contains also comments of my work.
